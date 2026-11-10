@@ -1,0 +1,7 @@
+dbtwh:
+  target: duckdb
+  outputs:
+    duckdb:
+      type: duckdb
+      path: "{{ env_var('WH_DB') }}"
+      threads: "{{ env_var('WH_THREADS', '4') | as_number }}"

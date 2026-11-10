@@ -1,0 +1,266 @@
+{
+ "environment": {
+  "dbtwh": "1.0.0",
+  "python": "3.14.10",
+  "dbt-core": "1.12.6",
+  "dbt-duckdb": "1.11.1",
+  "duckdb": "2.0.0",
+  "numpy": "2.5.4",
+  "system": "Linux x86_64",
+  "cpus": 12,
+  "command": "bench --sizes 10000,100000,1000000 --repeat 5 --threads 4 --out /out",
+  "seed": 1,
+  "repeat": 5,
+  "threads": 4,
+  "format": "parquet",
+  "seconds": 92.7
+ },
+ "sizes": [
+  {
+   "orders": 10000,
+   "rows": {
+    "customers": 1519,
+    "products": 200,
+    "orders": 10099,
+    "order_items": 21946,
+    "payments": 10809
+   },
+   "raw_bytes": 414792,
+   "generate_s": 0.10536511499958578,
+   "build_s": 1.7485244274139404,
+   "models_s": 1.078756332397461,
+   "data_tests_s": 3.0745251178741455,
+   "unit_tests_s": 0.9874393939971924,
+   "layers_s": {
+    "staging": 0.5370697975158691,
+    "intermediate": 0.15758895874023438,
+    "marts": 0.27270936965942383
+   },
+   "nodes": {
+    "stg_order_items": {
+     "layer": "staging",
+     "median_s": 0.21657466888427734
+    },
+    "stg_products": {
+     "layer": "staging",
+     "median_s": 0.07410645484924316
+    },
+    "stg_customers": {
+     "layer": "staging",
+     "median_s": 0.08329463005065918
+    },
+    "stg_payments": {
+     "layer": "staging",
+     "median_s": 0.08669471740722656
+    },
+    "stg_orders": {
+     "layer": "staging",
+     "median_s": 0.09107375144958496
+    },
+    "int_order_payments": {
+     "layer": "intermediate",
+     "median_s": 0.08710336685180664
+    },
+    "int_order_totals": {
+     "layer": "intermediate",
+     "median_s": 0.09032082557678223
+    },
+    "fct_orders": {
+     "layer": "marts",
+     "median_s": 0.08687019348144531
+    },
+    "mart_monthly_revenue": {
+     "layer": "marts",
+     "median_s": 0.04442238807678223
+    },
+    "dim_customers": {
+     "layer": "marts",
+     "median_s": 0.06294512748718262
+    },
+    "dim_products": {
+     "layer": "marts",
+     "median_s": 0.06796813011169434
+    },
+    "mart_cohort_retention": {
+     "layer": "marts",
+     "median_s": 0.027940988540649414
+    }
+   },
+   "summary": {
+    "models": 12,
+    "data_tests": 49,
+    "unit_tests": 5,
+    "passed": 66,
+    "failed": 0
+   },
+   "warehouse_bytes": 2371584,
+   "checks": 31,
+   "verified": true,
+   "mismatches": []
+  },
+  {
+   "orders": 100000,
+   "rows": {
+    "customers": 14847,
+    "products": 2000,
+    "orders": 101028,
+    "order_items": 220329,
+    "payments": 107601
+   },
+   "raw_bytes": 4278231,
+   "generate_s": 0.23415865499919164,
+   "build_s": 1.8494231700897217,
+   "models_s": 1.1994564533233643,
+   "data_tests_s": 3.046006917953491,
+   "unit_tests_s": 0.909635066986084,
+   "layers_s": {
+    "staging": 0.5448217391967773,
+    "intermediate": 0.20007061958312988,
+    "marts": 0.47262144088745117
+   },
+   "nodes": {
+    "stg_order_items": {
+     "layer": "staging",
+     "median_s": 0.19197845458984375
+    },
+    "stg_products": {
+     "layer": "staging",
+     "median_s": 0.07082176208496094
+    },
+    "stg_orders": {
+     "layer": "staging",
+     "median_s": 0.08508825302124023
+    },
+    "stg_payments": {
+     "layer": "staging",
+     "median_s": 0.08709478378295898
+    },
+    "stg_customers": {
+     "layer": "staging",
+     "median_s": 0.10715579986572266
+    },
+    "int_order_payments": {
+     "layer": "intermediate",
+     "median_s": 0.0989828109741211
+    },
+    "int_order_totals": {
+     "layer": "intermediate",
+     "median_s": 0.1059262752532959
+    },
+    "fct_orders": {
+     "layer": "marts",
+     "median_s": 0.22327232360839844
+    },
+    "mart_monthly_revenue": {
+     "layer": "marts",
+     "median_s": 0.04776120185852051
+    },
+    "dim_customers": {
+     "layer": "marts",
+     "median_s": 0.08343672752380371
+    },
+    "dim_products": {
+     "layer": "marts",
+     "median_s": 0.08031940460205078
+    },
+    "mart_cohort_retention": {
+     "layer": "marts",
+     "median_s": 0.03799843788146973
+    }
+   },
+   "summary": {
+    "models": 12,
+    "data_tests": 49,
+    "unit_tests": 5,
+    "passed": 66,
+    "failed": 0
+   },
+   "warehouse_bytes": 7352320,
+   "checks": 31,
+   "verified": true,
+   "mismatches": []
+  },
+  {
+   "orders": 1000000,
+   "rows": {
+    "customers": 149567,
+    "products": 2000,
+    "orders": 1009885,
+    "order_items": 2201403,
+    "payments": 1075972
+   },
+   "raw_bytes": 44361954,
+   "generate_s": 2.086638230000972,
+   "build_s": 2.788519859313965,
+   "models_s": 2.1288397312164307,
+   "data_tests_s": 4.326148509979248,
+   "unit_tests_s": 1.055065631866455,
+   "layers_s": {
+    "staging": 0.5363490581512451,
+    "intermediate": 0.6133971214294434,
+    "marts": 0.9007887840270996
+   },
+   "nodes": {
+    "stg_order_items": {
+     "layer": "staging",
+     "median_s": 0.19539475440979004
+    },
+    "stg_products": {
+     "layer": "staging",
+     "median_s": 0.08317327499389648
+    },
+    "stg_payments": {
+     "layer": "staging",
+     "median_s": 0.07410931587219238
+    },
+    "stg_orders": {
+     "layer": "staging",
+     "median_s": 0.07701802253723145
+    },
+    "stg_customers": {
+     "layer": "staging",
+     "median_s": 0.09258842468261719
+    },
+    "int_order_payments": {
+     "layer": "intermediate",
+     "median_s": 0.2969851493835449
+    },
+    "int_order_totals": {
+     "layer": "intermediate",
+     "median_s": 0.3086693286895752
+    },
+    "fct_orders": {
+     "layer": "marts",
+     "median_s": 0.46721744537353516
+    },
+    "mart_monthly_revenue": {
+     "layer": "marts",
+     "median_s": 0.04736900329589844
+    },
+    "dim_products": {
+     "layer": "marts",
+     "median_s": 0.1276865005493164
+    },
+    "dim_customers": {
+     "layer": "marts",
+     "median_s": 0.18151307106018066
+    },
+    "mart_cohort_retention": {
+     "layer": "marts",
+     "median_s": 0.05827164649963379
+    }
+   },
+   "summary": {
+    "models": 12,
+    "data_tests": 49,
+    "unit_tests": 5,
+    "passed": 66,
+    "failed": 0
+   },
+   "warehouse_bytes": 94908416,
+   "checks": 31,
+   "verified": true,
+   "mismatches": []
+  }
+ ]
+}

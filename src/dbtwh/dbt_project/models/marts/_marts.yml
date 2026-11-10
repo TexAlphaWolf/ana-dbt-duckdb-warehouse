@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: One row per order. Revenue is the net value of every order that was not cancelled.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: order_id
+        data_type: bigint
+        data_tests: [unique, not_null]
+      - name: customer_id
+        data_type: bigint
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+      - name: ordered_at
+        data_type: timestamp
+      - name: order_month
+        data_type: date
+      - name: status
+        data_type: varchar
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [pending, shipped, completed, cancelled]
+      - name: is_revenue
+        data_type: boolean
+      - name: units
+        data_type: bigint
+      - name: gross_cents
+        data_type: bigint
+      - name: discount_cents
+        data_type: bigint
+      - name: net_cents
+        data_type: bigint
+        data_tests: [non_negative]
+      - name: revenue_cents
+        data_type: bigint
+        data_tests: [non_negative]
+      - name: margin_cents
+        data_type: bigint
+      - name: paid_cents
+        data_type: bigint
+        data_tests: [non_negative]
+      - name: payment_state
+        data_type: varchar
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [not_due, unpaid, partial, paid]
+  - name: dim_customers
+    description: One row per customer, with lifetime figures over non-cancelled orders.
+    columns:
+      - name: customer_id
+        data_tests: [unique, not_null]
+      - name: order_count
+        data_tests: [non_negative]
+      - name: lifetime_revenue_cents
+        data_tests: [non_negative]
+  - name: dim_products
+    columns:
+      - name: product_id
+        data_tests: [unique, not_null]
+  - name: mart_monthly_revenue
+    columns:
+      - name: order_month
+        data_tests: [unique, not_null]
+      - name: net_revenue_cents
+        data_tests: [non_negative]
+  - name: mart_cohort_retention
+    columns:
+      - name: cohort_month
+        data_tests: [not_null]
+      - name: retention_rate
+        data_tests:
+          - non_negative

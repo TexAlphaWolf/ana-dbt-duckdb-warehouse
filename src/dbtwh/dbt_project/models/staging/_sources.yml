@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Files delivered by the shop system (Parquet or CSV), read where they are; nothing is copied before staging.
+    meta:
+      external_location: "{{ var('raw_reader', 'read_parquet') }}('{{ env_var('WH_RAW') }}/{name}.{{ var('raw_ext', 'parquet') }}')"
+    tables:
+      - name: customers
+        description: Change records. A customer can appear several times; the row with the latest updated_at is the current one.
+      - name: products
+      - name: orders
+        description: One row per order, but some orders are delivered twice. Status is typed by hand.
+      - name: order_items
+      - name: payments
+        description: Payment attempts, including failed ones. Some rows are delivered twice.

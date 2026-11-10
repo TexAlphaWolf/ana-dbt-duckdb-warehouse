@@ -1,0 +1,47 @@
+version: 2
+
+unit_tests:
+  - name: stg_orders_cleans_status_and_drops_copies
+    description: Any case and stray spaces, the US spelling of cancelled, and an order delivered twice.
+    model: stg_orders
+    given:
+      - input: source('raw', 'orders')
+        format: sql
+        rows: |
+          select 1 as order_id, 10 as customer_id, timestamp '2025-01-05 10:00:00' as ordered_at, ' Completed ' as status union all
+          select 2, 11, timestamp '2025-01-06 11:00:00', 'CANCELED' union all
+          select 3, 12, timestamp '2025-01-07 12:00:00', 'shipped' union all
+          select 3, 12, timestamp '2025-01-07 12:00:00', 'shipped'
+    expect:
+      rows:
+        - {order_id: 1, customer_id: 10, ordered_at: '2025-01-05 10:00:00', status: completed}
+        - {order_id: 2, customer_id: 11, ordered_at: '2025-01-06 11:00:00', status: cancelled}
+        - {order_id: 3, customer_id: 12, ordered_at: '2025-01-07 12:00:00', status: shipped}
+
+  - name: stg_customers_keeps_the_latest_version
+    model: stg_customers
+    given:
+      - input: source('raw', 'customers')
+        format: sql
+        rows: |
+          select 1 as customer_id, 'old@example.org' as email, 'DE' as country, 'social' as channel,
+                 date '2024-03-01' as signup_date, timestamp '2025-02-01 00:00:00' as updated_at union all
+          select 1, 'new@example.com', 'IT', 'social', date '2024-03-01', timestamp '2025-09-01 00:00:00' union all
+          select 2, 'two@example.com', 'FR', 'email', date '2024-04-01', timestamp '2025-01-01 00:00:00'
+    expect:
+      rows:
+        - {customer_id: 1, email: 'new@example.com', country: IT, channel: social, signup_date: '2024-03-01', updated_at: '2025-09-01 00:00:00'}
+        - {customer_id: 2, email: 'two@example.com', country: FR, channel: email, signup_date: '2024-04-01', updated_at: '2025-01-01 00:00:00'}
+
+  - name: stg_payments_drops_copies
+    model: stg_payments
+    given:
+      - input: source('raw', 'payments')
+        format: sql
+        rows: |
+          select 1 as payment_id, 5 as order_id, timestamp '2025-01-05 10:05:00' as paid_at, 'card' as method,
+                 ' Captured' as status, 1000 as amount_cents union all
+          select 1, 5, timestamp '2025-01-05 10:05:00', 'card', ' Captured', 1000
+    expect:
+      rows:
+        - {payment_id: 1, order_id: 5, paid_at: '2025-01-05 10:05:00', method: card, status: captured, amount_cents: 1000}

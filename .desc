@@ -1,0 +1,1 @@
+Mini data warehouse with dbt and DuckDB - staging, intermediate and mart models, 49 data tests and 5 unit tests, every mart checked against an independent calculation.

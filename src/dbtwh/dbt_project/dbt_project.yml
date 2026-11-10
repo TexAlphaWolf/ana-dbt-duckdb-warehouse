@@ -1,0 +1,25 @@
+name: shop_warehouse
+version: "1.0.0"
+config-version: 2
+profile: dbtwh
+
+model-paths: [models]
+test-paths: [tests]
+macro-paths: [macros]
+
+# Where dbt writes: set by the command line (dbtwh build), so the project itself can be read-only.
+target-path: target
+log-path: logs
+
+models:
+  shop_warehouse:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: table
+    marts:
+      +materialized: table
+
+# Tests that find faults are errors; a few checks that only inform are warnings (see the tests themselves).
+data_tests:
+  +severity: error

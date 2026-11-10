@@ -1,0 +1,28 @@
+# Secrets and local data: never publish
+.env
+*.key
+*.pem
+secrets/
+data/
+*.db
+*.sqlite
+
+# Python / Node / IDE
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.idea/
+.vscode/
+build/
+dist/
+results*/
+dbtwh-out/
+dbt-out/
+demo/
+raw/
+target/
+logs/
+*.duckdb
+*.duckdb.wal
+fail*.txt
